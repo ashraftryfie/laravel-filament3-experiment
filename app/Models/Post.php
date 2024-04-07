@@ -19,4 +19,8 @@ class Post extends Model
         'status',
         'slug',
     ];
+
+    protected $casts = [
+        'tags' => 'array',
+    ];
 }
