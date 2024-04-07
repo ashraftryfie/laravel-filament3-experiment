@@ -9,7 +9,9 @@ use App\Models\Post;
 use App\PostStatus;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -33,18 +35,47 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
-                ColorPicker::make('color')->required(),
-                MarkdownEditor::make('content')->required(),
-                FileUpload::make('thumbnail')
-                    ->disk('public')->directory('thumbnails'),
-                TagsInput::make('tags')->required(),
-                Select::make('status')->options(PostStatus::class)->required(),
-                Select::make('category_id')
-                    ->required()
-                    ->label('Category')
-                    ->options(Category::all()->pluck('name', 'id')),
-                TextInput::make('slug')->required(),
+                Section::make('Create a New Post')
+                    ->description('create a new post using this form')
+                    //->collapsed()
+                    ->schema([
+                        TextInput::make('title')->required(),
+
+                        TextInput::make('slug')->required(),
+
+                        Select::make('status')
+                            ->options(PostStatus::class)
+                            ->required(),
+
+                        Select::make('category_id')
+                            ->required()
+                            ->label('Category')
+                            ->options(Category::all()->pluck('name', 'id')),
+
+                        MarkdownEditor::make('content')
+                            ->columnSpanFull()
+                            ->required(),
+                    ])->columnSpan(2)->columns(2),
+
+                Group::make()->schema([
+                    Section::make('Choose an Image')
+                        ->collapsible()
+                        ->schema([
+                            FileUpload::make('thumbnail')
+                                ->disk('public')
+                                ->directory('thumbnails'),
+                        ])->columnSpan(1),
+
+                    ColorPicker::make('color')->required(),
+
+                    TagsInput::make('tags')->required(),
+                ]),
+
+            ])->columns([
+                'default' => 1,
+                'md' => 2,
+                'lg' => 3,
+                'xlg' => 4,
             ]);
     }
 
