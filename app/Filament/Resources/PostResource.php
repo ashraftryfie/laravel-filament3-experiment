@@ -39,9 +39,18 @@ class PostResource extends Resource
                     ->description('create a new post using this form')
                     //->collapsed()
                     ->schema([
-                        TextInput::make('title')->required(),
+                        TextInput::make('title')
+                            ->rules([
+                                'min:3',
+                                'max:25',
+                            ])
+                            ->required(),
 
-                        TextInput::make('slug')->required(),
+                        TextInput::make('slug')
+                            ->minLength(3)
+                            ->maxLength(30)
+                            ->unique(ignoreRecord: true)
+                            ->required(),
 
                         Select::make('status')
                             ->options(PostStatus::class)
