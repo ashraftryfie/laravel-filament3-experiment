@@ -92,20 +92,29 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 ImageColumn::make('thumbnail'),
-                ColorColumn::make('color'),
-                TextColumn::make('title'),
-                TextColumn::make('content'),
-                TextColumn::make('tags'),
-                TextColumn::make('status'),
-                TextColumn::make('category_id'),
-                TextColumn::make('slug'),
+                ColorColumn::make('color')->toggleable(),
+                TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('content')->toggleable()->wrap(15)->searchable(),
+                TextColumn::make('tags')->toggleable(),
+                TextColumn::make('status')->toggleable()->sortable(),
+                TextColumn::make('category.name')->toggleable()->sortable()->searchable(),
+                TextColumn::make('slug')->toggleable()->sortable(),
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->date('Y M D')
+                    ->toggleable()
+                    ->label('Published on'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
