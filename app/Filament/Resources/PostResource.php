@@ -22,6 +22,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class PostResource extends Resource
@@ -124,7 +125,27 @@ class PostResource extends Resource
                     ->label('Published on'),
             ])
             ->filters([
-                //
+                // NOTE: name isn't important just for showing
+//                Filter::make('Published Posts')->query(
+//                    function (Builder $query): Builder {
+//                        return $query->where('status', 'published');
+//                    }
+//                ),
+                SelectFilter::make('status')
+                    ->label('Status Filter')
+                    ->options(PostStatus::class),
+
+
+                // NOTE: it's important to put column for make select filter
+                SelectFilter::make('category_id')
+//                    ->label('Category Filter')
+//                    ->options(
+//                        Category::all()->pluck('name', 'id')
+//                    )
+                    ->relationship('category', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
