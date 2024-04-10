@@ -18,6 +18,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
 
+//    protected static bool $shouldSkipAuthorization = true;  // for skip authorization in frontend
+
     public static function form(Form $form): Form
     {
         return $form

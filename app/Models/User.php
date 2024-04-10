@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,6 +48,18 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function isAdmin(): bool
+    {
+        return $this->role == UserRole::ADMIN;
+    }
+
+    public function isEditor(): bool
+    {
+        return $this->role == UserRole::Editor;
+    }
+
+    /********************* Relations ********************/
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(
