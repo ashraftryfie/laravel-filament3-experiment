@@ -2,8 +2,7 @@
 
 namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
-use App\PostStatus;
-use Filament\Forms;
+use App\Enums\PostStatus;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
@@ -16,8 +15,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PostsRelationManager extends RelationManager
 {
