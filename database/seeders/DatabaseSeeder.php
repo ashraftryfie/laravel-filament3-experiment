@@ -17,21 +17,21 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
          User::factory()->create([
-             'name' => 'Ashraf',
+             'name' => 'Ashraf Admin',
              'email' => 'admin@admin.com',
              'password' => bcrypt('123'),
              'role' => UserRole::ADMIN,
          ]);
 
         User::factory()->create([
-            'name' => 'Ashraf',
+            'name' => 'Ashraf Editor',
             'email' => 'admin@editor.com',
             'password' => bcrypt('123'),
             'role' => UserRole::Editor,
         ]);
 
         User::factory()->create([
-            'name' => 'Ashraf',
+            'name' => 'Ashraf User',
             'email' => 'admin@user.com',
             'password' => bcrypt('123'),
             'role' => UserRole::USER,
