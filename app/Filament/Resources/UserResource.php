@@ -21,6 +21,8 @@ class UserResource extends Resource
 
 //    protected static bool $shouldSkipAuthorization = true;  // for skip authorization in frontend
 
+    protected static ?string $navigationGroup = 'Accounts';
+
     public static function form(Form $form): Form
     {
         return $form

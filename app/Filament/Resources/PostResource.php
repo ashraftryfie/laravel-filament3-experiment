@@ -31,7 +31,11 @@ class PostResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-pencil-square';
 
-    protected static ?string $modelLabel = 'Post CRUD';
+    protected static ?string $modelLabel = 'Posts';
+
+    protected static ?string $navigationGroup = 'Posts & Comments';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
