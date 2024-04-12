@@ -18,8 +18,9 @@ class UsersStatsWidget extends BaseWidget
                 ->descriptionColor('success')
                 ->chart([
                     1, 2, 3, 8, 32, 18, 40
-                ])->color('success')
-            ,
+                ])->color('success'),
+
+            // NOTE: We can add any other stats chart here too...
         ];
     }
 }
