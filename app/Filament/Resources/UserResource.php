@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -43,7 +44,13 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('email')->sortable()->searchable(),
-                TextColumn::make('role')->sortable()->searchable(),
+                TextColumn::make('role')
+                    ->sortable()->searchable()
+                    ->badge()->color(fn(UserRole $state): string => match ($state) {
+                        UserRole::ADMIN => 'danger',
+                        UserRole::Editor => 'info',
+                        UserRole::USER => 'success',
+                    }),
                 TextColumn::make('created_at')
                     ->sortable()->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
