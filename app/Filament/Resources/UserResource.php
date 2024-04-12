@@ -43,6 +43,7 @@ class UserResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
+                TextColumn::make('role'),
             ])
             ->filters([
                 //
