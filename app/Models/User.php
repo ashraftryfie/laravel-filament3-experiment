@@ -45,6 +45,7 @@ class User extends Authenticatable implements FilamentUser
      * @var array<string, string>
      */
     protected $casts = [
+        'role' => UserRole::class,
         'email_verified_at' => 'datetime',
     ];
 
