@@ -21,6 +21,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-folder';
 
+    protected static ?string $navigationGroup = 'Posts & Comments';
+
     public static function form(Form $form): Form
     {
         return $form
