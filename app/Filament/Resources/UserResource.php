@@ -47,6 +47,7 @@ class UserResource extends Resource
                 TextColumn::make('role')
                     ->sortable()->searchable()
                     ->badge()->color(fn(UserRole $state): string => match ($state) {
+                        // https://filamentphp.com/docs/3.x/support/colors
                         UserRole::ADMIN => 'danger',
                         UserRole::Editor => 'info',
                         UserRole::USER => 'success',
