@@ -4,16 +4,18 @@ namespace App\Filament\Widgets;
 
 use App\Models\User;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
+use Illuminate\Support\Carbon;
 
 class LineChartsWidget extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Post Chart';
-
-    protected int | string | array $columnSpan = 1;
-
     protected static ?int $sort = 2;
+    protected int|string|array $columnSpan = 1;
 
     protected function getData(): array
     {
@@ -28,10 +30,15 @@ class LineChartsWidget extends ChartWidget
 //            ],
 //            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 //        ];
+
+        $startDate = $this->filters['startDate'] ?? 1;
+        $endDate = $this->filters['endDate'] ?? 1;
+
         $data = Trend::model(User::class)
             ->between(
-                start: now()->subMonths(10),  // last 6 months
-                end: now(),
+            //start: now()->subMonths(10),  // last 6 months
+                start: $startDate ? Carbon::parse($startDate) : now()->subMonths(10),
+                end: $endDate ? Carbon::parse($endDate) : now(),
             )
             ->perMonth()
             ->count();
@@ -42,10 +49,10 @@ class LineChartsWidget extends ChartWidget
             'datasets' => [
                 [
                     'label' => 'Newly joined users',
-                    'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
+                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
                 ],
             ],
-            'labels' => $data->map(fn (TrendValue $value) => $value->date),
+            'labels' => $data->map(fn(TrendValue $value) => $value->date),
         ];
     }
 
