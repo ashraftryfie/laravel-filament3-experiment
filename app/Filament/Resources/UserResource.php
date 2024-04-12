@@ -40,10 +40,16 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
-                TextColumn::make('name'),
-                TextColumn::make('email'),
-                TextColumn::make('role'),
+                TextColumn::make('id')->sortable()->searchable(),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('email')->sortable()->searchable(),
+                TextColumn::make('role')->sortable()->searchable(),
+                TextColumn::make('created_at')
+                    ->sortable()->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->sortable()->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
